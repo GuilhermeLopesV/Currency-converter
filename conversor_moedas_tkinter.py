@@ -58,8 +58,8 @@ janela.grid_columnconfigure(0, weight=1)
 janela.grid_columnconfigure(1, weight=1)
 janela.grid_columnconfigure(2, weight=1)
 
-texto_cpf = Label(janela, text=mensagem, font=('Arial', 15))
-texto_cpf.grid(column=1, row=1, padx=5, pady=5)
+texto_mensagem = Label(janela, text=mensagem, font=('Arial', 15))
+texto_mensagem.grid(column=1, row=1, padx=5, pady=5)
 
 texto_de_orintacao1 = Label(janela, text='Digite o valor a converter: ', font=('Arial', 15))
 texto_de_orintacao1.grid(column=1, row=2, padx=25, pady=25)

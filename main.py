@@ -22,24 +22,25 @@ def conversor(moeda_origem, moeda_destino, valor):
     convertido = valor * taxa
     print(f"{valor:.2f} {moeda_origem} = {convertido:.4f} {moeda_destino}")
 
-while True:
-    limpar_tela()
-    print('-' * 40)
-    print(' BEM-VINDO AO CONVERSOR DE MOEDAS '.center(40, '-'))
-    print('-' * 40)
-    print('(Exemplo: BRL, USD, EUR, ARS)')
+def conversor_de_moeda():
+    while True:
+        limpar_tela()
+        print('-' * 40)
+        print(' BEM-VINDO AO CONVERSOR DE MOEDAS '.center(40, '-'))
+        print('-' * 40)
+        print('(Exemplo: BRL, USD, EUR, ARS)')
 
-    try:
-        valor = float(input('Digite o valor a converter: '))
-        moeda_origem = input('Digite a moeda de origem: ').upper()
-        moeda_destino = input('Digite a moeda de destino: ').upper()
-    except ValueError:
-        print('Valor digitado está incorreto. Use apenas números.')
-        input("Pressione Enter para tentar novamente...")
-        continue
+        try:
+            valor = float(input('Digite o valor a converter: '))
+            moeda_origem = input('Digite a moeda de origem: ').upper()
+            moeda_destino = input('Digite a moeda de destino: ').upper()
+        except ValueError:
+            print('Valor digitado está incorreto. Use apenas números.')
+            input("Pressione Enter para tentar novamente...")
+            continue
 
-    conversor(moeda_origem, moeda_destino, valor)
+        conversor(moeda_origem, moeda_destino, valor)
 
-    sair = input('Deseja sair? [S/N] ').upper()
-    if sair == 'S':
-        break
+        sair = input('Deseja sair? [S/N] ').upper()
+        if sair == 'S':
+            break
