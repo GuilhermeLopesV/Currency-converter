@@ -1,46 +1,52 @@
-import os
+from tkinter import *
+from conversor import ConversorMoeda
 
-def limpar_tela():
-    os.system('cls' if os.name == 'nt' else 'clear')
+class App:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Conversor de Moedas")
+        self.root.geometry('500x400')
 
-brl = {'EUR': 0.16, 'ARS': 277.78, 'USD': 0.19}
-eur = {'ARS': 1702.73, 'USD': 1.15, 'BRL': 6.18}
-usd = {'EUR': 0.87, 'ARS': 1480.25, 'BRL': 5.38}
-ars = {'EUR': 0.00059, 'USD': 0.00068, 'BRL': 0.0036}
+        self.conversor = ConversorMoeda()
 
-def conversor(moeda_origem, moeda_destino, valor):
-    taxas = {'BRL': brl, 'EUR': eur, 'USD': usd, 'ARS': ars}
+        self.criar_widgets()
 
-    if moeda_origem not in taxas:
-        print(f"A moeda de origem '{moeda_origem}' não é suportada.")
-        return
-    if moeda_destino not in taxas[moeda_origem]:
-        print(f"Não há taxa de conversão de {moeda_origem} para {moeda_destino}.")
-        return
+    def criar_widgets(self):
+        Label(self.root, text="Conversor de Moedas", font=('Arial', 18)).pack(pady=10)
 
-    taxa = taxas[moeda_origem][moeda_destino]
-    convertido = valor * taxa
-    print(f"{valor:.2f} {moeda_origem} = {convertido:.4f} {moeda_destino}")
+        self.valor_entry = Entry(self.root)
+        self.valor_entry.pack(pady=5)
 
-def conversor_de_moeda():
-    while True:
-        limpar_tela()
-        print('-' * 40)
-        print(' BEM-VINDO AO CONVERSOR DE MOEDAS '.center(40, '-'))
-        print('-' * 40)
-        print('(Exemplo: BRL, USD, EUR, ARS)')
+        self.origem_entry = Entry(self.root)
+        self.origem_entry.pack(pady=5)
 
+        self.destino_entry = Entry(self.root)
+        self.destino_entry.pack(pady=5)
+
+        Button(self.root, text="Converter", command=self.converter).pack(pady=10)
+
+        self.resultado_label = Label(self.root, text="", font=('Arial', 12))
+        self.resultado_label.pack(pady=10)
+
+        Button(self.root, text="Sair", command=self.root.destroy, bg='red', fg='white').pack(pady=10)
+
+    def converter(self):
         try:
-            valor = float(input('Digite o valor a converter: '))
-            moeda_origem = input('Digite a moeda de origem: ').upper()
-            moeda_destino = input('Digite a moeda de destino: ').upper()
-        except ValueError:
-            print('Valor digitado está incorreto. Use apenas números.')
-            input("Pressione Enter para tentar novamente...")
-            continue
+            valor = float(self.valor_entry.get())
+            origem = self.origem_entry.get()
+            destino = self.destino_entry.get()
 
-        conversor(moeda_origem, moeda_destino, valor)
+            resultado = self.conversor.converter(origem, destino, valor)
 
-        sair = input('Deseja sair? [S/N] ').upper()
-        if sair == 'S':
-            break
+            self.resultado_label.config(
+                text=f"{valor:.2f} {origem.upper()} = {resultado:.2f} {destino.upper()}"
+            )
+
+        except ValueError as e:
+            self.resultado_label.config(text=str(e))
+
+
+if __name__ == "__main__":
+    root = Tk()
+    app = App(root)
+    root.mainloop()
